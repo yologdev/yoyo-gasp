@@ -1,0 +1,9 @@
+# Executor binding — the only file that changes on a model/runtime swap.
+[executor]
+provider = "anthropic"
+model = "claude-opus-4-6"
+runtime = "yoyo-evolve"
+runtime_repo = "https://github.com/yologdev/yoyo-evolve"
+
+[state]
+events = "state/events.jsonl"
