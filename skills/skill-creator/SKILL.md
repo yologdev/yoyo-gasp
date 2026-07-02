@@ -23,7 +23,7 @@ These are complementary, not redundant. Use the right one:
 | Diff-scope guard? | None — runs in evolve session | Yes — `scripts/skill_evolve.sh` enforces |
 | Auto-commit? | Yes (inside evolve session's commit flow) | Yes (after diff-scope + build/test gates) |
 
-**Rule of thumb**: if no human asked, you're not creating a skill — you're noticing a pattern. Write it to `memory/learnings.jsonl` with a `pattern_key` and let skill-evolve pick it up on the next cycle.
+**Rule of thumb**: if no human asked, you're not creating a skill — you're noticing a pattern. Write it to `memory/facts.jsonl` with a `pattern_key` and let skill-evolve pick it up on the next cycle.
 
 ## When NOT to use this skill
 

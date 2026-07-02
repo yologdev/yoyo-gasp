@@ -3,7 +3,10 @@
 provider = "anthropic"
 model = "claude-opus-4-6"
 runtime = "yoyo-evolve"
+# The executor's source repo — patch artifacts recorded in the log pin
+# commits of this repo (see AGENT.md).
 runtime_repo = "https://github.com/yologdev/yoyo-evolve"
 
 [state]
+# Informational; the AGENT.md Locations table is authoritative.
 events = "state/events.jsonl"

@@ -199,7 +199,7 @@ Required fields: summary (string), key_lines (array), deeper_question (string or
 
 **Sub-agent failure fallback** — if the sub-agent (a) errors, (b) returns non-JSON twice (initial + retry), (c) returns truncated JSON that can't be repaired, or (d) is unavailable as a tool:
 
-1. Append the raw response to `memory/learnings.jsonl` as a learning entry with `pattern_key: trajectory.subagent_malformed_response` so we can debug later.
+1. Append the raw response to `memory/facts.jsonl` as a learning entry with `pattern_key: trajectory.subagent_malformed_response` so we can debug later.
 2. Extract whatever text the sub-agent did return and treat it as the `summary` field. Construct a synthetic response: `{"summary": "<raw text, first 500 chars>", "key_lines": [], "deeper_question": null, "confidence": "low"}`.
 3. If even the raw text is empty or the sub-agent errored entirely, downgrade to a direct read of the artifact: use `shared_state get key="trajectory.run-<id>"` to retrieve the stored log, then read the last 50-100 lines in your main context.
 4. Produce a low-confidence diagnosis from what you can see directly. Skip recursion (no point — sub-agent path is broken).
@@ -219,12 +219,12 @@ Produce a 3-5 sentence diagnosis paragraph that includes:
 - **What recurs**: one-line summary of the pattern
 - **Root cause** (or best-guess): from the sub-agent's summary
 - **Evidence**: ≤3 specific lines or run IDs
-- **Suggested next attempt**: one concrete action (a different approach, a new task, or "log to learnings.jsonl and skip for now")
+- **Suggested next attempt**: one concrete action (a different approach, a new task, or "log to facts.jsonl and skip for now")
 
 Write the diagnosis somewhere durable:
 - If you're in a normal evolve session and this informed your task choice → cite it in the assessment doc
 - If you're investigating a specific issue → comment on the issue with the diagnosis
-- Always also append a `learnings.jsonl` entry. The `pattern_key` field (optional in the standard schema, see `skills/communicate/SKILL.md`) takes a kebab-case `<verb>.<object>` value — for trajectory-derived diagnoses, use `pattern_key: trajectory.<short-slug>` (e.g., `trajectory.fallback_provider_stuck`, `trajectory.evaluator_rate_limit`). This lets skill-evolve cluster recurring trajectory findings.
+- Always also append a `facts.jsonl` entry. The `pattern_key` field (optional in the standard schema, see `skills/communicate/SKILL.md`) takes a kebab-case `<verb>.<object>` value — for trajectory-derived diagnoses, use `pattern_key: trajectory.<short-slug>` (e.g., `trajectory.fallback_provider_stuck`, `trajectory.evaluator_rate_limit`). This lets skill-evolve cluster recurring trajectory findings.
 
 ## Pitfalls
 
@@ -243,7 +243,7 @@ A diagnosis is "good enough" when ALL of:
 - The suggested next attempt is *different* from what's already been tried (otherwise you'll just hit the same wall)
 - The total work used ≤3 sub-agent dispatches
 
-If the diagnosis fails any of these, recurse one more time (within the cap) or accept the partial result and document the open question in `learnings.jsonl`.
+If the diagnosis fails any of these, recurse one more time (within the cap) or accept the partial result and document the open question in `facts.jsonl`.
 
 ## What this skill deliberately does NOT do
 

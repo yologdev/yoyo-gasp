@@ -191,7 +191,7 @@ The synthesis sub-agent's `answer` field is your composed response. Use it to:
 - Answer the user's original question
 - Inform a technical decision in an evolve session
 - Write a journal entry or issue comment with cited sources
-- Add to `memory/learnings.jsonl` if the finding is novel and would change future behavior
+- Add to `memory/facts.jsonl` if the finding is novel and would change future behavior
 
 Store the final synthesis in shared state under `synthesis.<topic>.result` so it can be referenced later in the session without re-running.
 

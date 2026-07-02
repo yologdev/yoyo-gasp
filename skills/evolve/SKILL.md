@@ -34,7 +34,7 @@ You are modifying yourself. This is powerful and dangerous. Follow these rules e
 ## Before any code change
 
 1. Read your current source code completely
-2. Read journals/JOURNAL.md — check if you've attempted this before
+2. Read journal/JOURNAL.md — check if you've attempted this before
 3. Understand what you're changing and WHY
 
 ## Making changes

@@ -39,7 +39,7 @@ Today the eligible set is exactly the skills whose SKILL.md declares `origin: yo
 
 **Defense in depth**: if a skill has `core: true` set, refuse even if `origin: yoyo` is also somehow present. The two flags should never co-occur, but the conservative move is to honor the deny-flag.
 
-If a recurring pattern suggests a non-eligible skill needs change (e.g., a core skill, or an installed marketplace skill), do not edit it. Instead, write a learning to `memory/learnings.jsonl` with `source: "skill-evolve"` and a clear pattern_key, and append a `meta-suggestion` block to `skills/_journal.md`. The human creator will decide.
+If a recurring pattern suggests a non-eligible skill needs change (e.g., a core skill, or an installed marketplace skill), do not edit it. Instead, write a learning to `memory/facts.jsonl` with `source: "skill-evolve"` and a clear pattern_key, and append a `meta-suggestion` block to `skills/_journal.md`. The human creator will decide.
 
 ### HARD RULE #2 — Never edit yourself
 
@@ -60,7 +60,7 @@ Each cycle produces **exactly one** of:
 - a retirement (one `git mv` to `skills_attic/`)
 - a `NO-OP` event (you found nothing worth doing)
 
-If you find yourself wanting to do two things, pick the one with the strongest evidence and write the second to `memory/learnings.jsonl` for next cycle.
+If you find yourself wanting to do two things, pick the one with the strongest evidence and write the second to `memory/facts.jsonl` for next cycle.
 
 ### HARD RULE #4 — Refine and Create events must declare an expected outcome
 
@@ -123,10 +123,10 @@ Run these steps in order, every cycle.
 tail -n 200 skills/_journal.md
 
 # Recent self-reflection:
-tail -n 50 memory/learnings.jsonl
+tail -n 50 memory/facts.jsonl
 
 # Top of journal (newest entries are at top):
-head -n 200 journals/JOURNAL.md
+head -n 200 journal/JOURNAL.md
 
 # Recent runs:
 gh run list --json url,conclusion,createdAt,name -L 10 || echo "[]"
@@ -138,7 +138,7 @@ ls "${YOYO_AUDIT_DIR:-/tmp/audit-read/sessions}" 2>/dev/null | tail -30
 **First-run handling**: if `$YOYO_AUDIT_DIR` is unset or its directory is empty, the audit-log branch hasn't accumulated evidence yet (this is normal on the first 1–2 cycles). In that case:
 
 - Skip the per-session audit.jsonl mining in step 3 ("Mine patterns").
-- Use only `memory/learnings.jsonl` and `journals/JOURNAL.md` for complaint and use signals.
+- Use only `memory/facts.jsonl` and `journal/JOURNAL.md` for complaint and use signals.
 - Lean toward **NO-OP** — without audit evidence, scoring is too noisy to support a confident refine/create/retire decision.
 - Write the NO-OP event with note: `evidence: only learnings (audit-log unavailable)`.
 
@@ -165,7 +165,7 @@ This step has two layers: **counting** (the basic signals) and **diagnosing** (u
 
 For each eligible skill, count:
 
-- **Complaint signals**: entries in `memory/learnings.jsonl` whose `pattern_key` or `title`/`takeaway` mentions the skill *and* uses negative language ("wrong", "didn't", "instead", "should have").
+- **Complaint signals**: entries in `memory/facts.jsonl` whose `pattern_key` or `title`/`takeaway` mentions the skill *and* uses negative language ("wrong", "didn't", "instead", "should have").
 - **Failure signals**: tool-call failures in `${YOYO_AUDIT_DIR}/day-*/audit.jsonl` where the bash command or args reference the skill's domain.
 - **Use signals**: number of sessions where any string from the skill's frontmatter `keywords:` list appears in that session's `audit.jsonl`. This is `uses`.
 - **Win signals**: out of those sessions, count the ones where `outcome.json` has `test_ok: true` AND `tasks_succeeded >= 1`. This is `wins`.
@@ -195,7 +195,7 @@ For each skill where `complaint_signals ≥ 2` OR `(wins/uses) < 0.5` (with `use
 | `success: false` with the same `tool` and similar `args` across multiple sessions | Skill's procedure has a recurring blind spot | Add a `## Pitfalls` entry; consider a "do this first" prelude |
 | Long bash sequences (10+ tool calls) without intermediate `read_file` of relevant docs | Skill points at non-existent docs OR doesn't tell agent to verify state | Add a "verify your assumptions" step in `## Procedure` |
 | Tool calls that *should* be there per `keywords:` are absent | Skill isn't actually being invoked when it should be | The `description:` is too weak — refine that field instead of the body |
-| Skill body cites a file/flag/procedure that no longer exists, or contradicts a newer rule (cross-check recent `journals/JOURNAL.md` + `CLAUDE.md`) | Guidance is stale or superseded — the skill is *longer than it should be*, not missing a line | **Replace** the stale lines or **delete** them. Subtraction is a first-class refine (SkillOpt: skills get sharper, not longer) |
+| Skill body cites a file/flag/procedure that no longer exists, or contradicts a newer rule (cross-check recent `journal/JOURNAL.md` + `CLAUDE.md`) | Guidance is stale or superseded — the skill is *longer than it should be*, not missing a line | **Replace** the stale lines or **delete** them. Subtraction is a first-class refine (SkillOpt: skills get sharper, not longer) |
 
 For each candidate refinement target, write a **1-2 sentence cause hypothesis**:
 
@@ -216,7 +216,7 @@ Decision order (first match wins):
 
 1. **Retire** (third cycle onward only): if any skill has `score < 0.3` AND `last_used` ≥ 10 sessions ago, retire the lowest-scoring one. Skip if there are < 2 active eligible skills (don't bottom out the library).
 2. **Refine**: if any skill (a) has `complaint_signals ≥ 2`, OR (b) has `(wins/uses) < 0.5` with `uses ≥ 3`, AND in either case has not been refined in the last 3 sessions (`last_evolved` check), refine it. This matches the diagnosis-trigger condition in step 3b. Pick the target with the strongest evidence (highest complaint count, or lowest wins-ratio if no complaints). A refine may be **subtractive**: deleting or replacing stale/superseded guidance is as valid as adding, and a net-negative diff is often the best outcome — a skill should get sharper over time, not longer.
-3. **Create** (second cycle onward only, and only if active skill count < 25): if any `pattern_key` appears in ≥3 distinct sessions of `learnings.jsonl`, AND a learning carrying that `pattern_key` has a `validation_case` (issue #501 — **required**: a pattern with no `validation_case` may not become a skill; leave it as a note, or write a learning suggesting one be authored), AND no existing eligible skill covers it (≥3 keyword overlap → refine that one instead), draft a new skill. **Applied gate (bootstrap):** also require `applied ≥ 1` for that `pattern_key` (it was acted on, not just recurred); while `applied_pattern_keys` is still sparse (the first ~10 sessions after this field ships), recurrence ≥3 alone may stand in — once the signal is populated, tighten to require both. (Only the `applied` gate has a bootstrap; the `validation_case` requirement above is never relaxed.)
+3. **Create** (second cycle onward only, and only if active skill count < 25): if any `pattern_key` appears in ≥3 distinct sessions of `facts.jsonl`, AND a learning carrying that `pattern_key` has a `validation_case` (issue #501 — **required**: a pattern with no `validation_case` may not become a skill; leave it as a note, or write a learning suggesting one be authored), AND no existing eligible skill covers it (≥3 keyword overlap → refine that one instead), draft a new skill. **Applied gate (bootstrap):** also require `applied ≥ 1` for that `pattern_key` (it was acted on, not just recurred); while `applied_pattern_keys` is still sparse (the first ~10 sessions after this field ships), recurrence ≥3 alone may stand in — once the signal is populated, tighten to require both. (Only the `applied` gate has a bootstrap; the `validation_case` requirement above is never relaxed.)
 4. **NO-OP**: nothing meets the bars. Write a `NO-OP` event with a one-line note about what evidence you considered.
 
 If you've written 3 consecutive `NO-OP` events, also write `evolution_saturation: true` to the event — the harness reads this and extends the cooldown.
@@ -445,7 +445,7 @@ If your candidate `expected:` line reads like one of those, you do not have a th
 ### 8. Commit
 
 ```bash
-git add skills/ skills_attic/ memory/learnings.jsonl
+git add skills/ skills_attic/ memory/facts.jsonl
 git commit -m "skill-evolve: <type> <skill-name>" || true
 ```
 
@@ -469,9 +469,9 @@ Before any `create` action, verify all of these:
 | **Skill thrashing** | Same skill refined twice within 3 sessions | Read `last_evolved` before refining; if < 3 sessions ago, pick a different target or NO-OP |
 | **Saturation** | 3 consecutive NO-OP events in `_journal.md` | Add `evolution_saturation: true` to the third event; harness will extend cooldown |
 | **Self-edit attempt** | Pattern points at `skill-evolve` itself | HARD RULE #2 — write `meta-suggestion` and stop |
-| **Core-edit attempt** | Pattern points at one of the core 4 | HARD RULE #1 — write `learnings.jsonl` entry and stop |
+| **Core-edit attempt** | Pattern points at one of the core 4 | HARD RULE #1 — write `facts.jsonl` entry and stop |
 | **Skill collision** | New skill's triggers overlap an existing skill | Refine the existing skill instead |
-| **Identity drift** | Pattern would contradict IDENTITY.md / PERSONALITY.md | Refuse; write a `learnings.jsonl` entry noting the contradiction |
+| **Identity drift** | Pattern would contradict IDENTITY.md / PERSONALITY.md | Refuse; write a `facts.jsonl` entry noting the contradiction |
 
 ## What good looks like
 

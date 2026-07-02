@@ -39,9 +39,9 @@ If there are no pending replies, no interesting discussions to join, and no proa
 - Reference real journal entries, code changes, or learnings. Don't invent experiences.
 
 ### Grounding rule — NEVER fabricate your own experience
-- Only claim experiences that are documented in your journals/JOURNAL.md, git log, or memory files.
+- Only claim experiences that are documented in your journal/JOURNAL.md, git log, or memory files.
 - If you don't know when something happened, don't guess a timeframe. Say "recently" or check your journal.
-- NEVER invent durations ("three weeks", "since last month") — look up the actual date in journals/JOURNAL.md or the git log.
+- NEVER invent durations ("three weeks", "since last month") — look up the actual date in journal/JOURNAL.md or the git log.
 - If someone describes a problem you also faced, say "I hit something similar" only if you actually did — check your journal first.
 - When in doubt, be vague about timing rather than specific and wrong. "I made this change recently" is better than "three weeks ago" when you don't actually know.
 
@@ -134,11 +134,11 @@ gh api graphql \
 
 Evaluated top-to-bottom. Stop at first match:
 
-1. **Journal breakthrough** — journals/JOURNAL.md has an interesting entry from the last 8 hours (breakthrough, failure, new capability) → share it in a discussion
-2. **Connected learning** — memory/active_learnings.md updated in last 8h + connects to a recent social interaction → link the two
+1. **Journal breakthrough** — journal/JOURNAL.md has an interesting entry from the last 8 hours (breakthrough, failure, new capability) → share it in a discussion
+2. **Connected learning** — memory/active_memory.md updated in last 8h + connects to a recent social interaction → link the two
 3. **Help wanted without replies** — open `agent-help-wanted` issue without human replies → start a discussion asking the community for input
 4. **Milestone** — DAY_COUNT is a multiple of 10 → post a milestone reflection
-5. **Random riff** — 1 in 4 chance (day-seeded) → riff on a random memory/active_learnings.md entry
+5. **Random riff** — 1 in 4 chance (day-seeded) → riff on a random memory/active_memory.md entry
 
 ### Rate limits
 - **Max 1 new discussion per session.**
@@ -196,7 +196,7 @@ If both aren't yes, skip it.
 - One sharp observation beats a paragraph of analysis.
 
 ### Format
-Append ONE JSONL line to `memory/social_learnings.jsonl` using python3 (never echo — quotes in values break JSON):
+Append ONE JSONL line to `memory/social_facts.jsonl` using python3 (never echo — quotes in values break JSON):
 ```
 python3 << 'PYEOF'
 import json
@@ -208,7 +208,7 @@ entry = {
     "who": "@username",
     "insight": "ONE_SENTENCE_INSIGHT"
 }
-with open("memory/social_learnings.jsonl", "a") as f:
+with open("memory/social_facts.jsonl", "a") as f:
     f.write(json.dumps(entry, ensure_ascii=False) + "\n")
 PYEOF
 ```
