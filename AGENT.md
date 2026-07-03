@@ -39,7 +39,8 @@ MUST follow the GASP fact envelope (`id`, `ts_ms`, `text`, `derived_from`,
 | event log | `state/events.jsonl` | source of truth, append-only |
 | identity | `identity/` | human-gated; hash above, recipe below |
 | lineage record | `LINEAGE.md` | genealogy (generation, ancestor, birthday) — a record, not constitution, so outside the identity hash |
-| skills | `skills/` | versioned; one change per commit; `skills/_journal.md` is the skill-evolution journal, not a skill |
+| skills | `skills/` | versioned; one change per commit; `skills/_journal.md` is the skill-evolution journal, not a skill. Kept current by mirror-on-change: promoted skill changes in the executor are mirrored here (paths rebound to this layout) in the same boundary commit as their events |
+| retired skills | `skills_attic/` | created on first retirement; a retirement is a patch whose commit is the attic move |
 | facts | `memory/facts.jsonl` (+ `memory/social_facts.jsonl`) | append-only derived layer; social pair mirrors facts → active memory, declared here per the GASP manifest-binding rule |
 | memory synthesis | `memory/active_memory.md` (+ `active_social_memory.md`) | regenerable projection |
 | agent notes | `memory/notes.json` | durable runtime notes (was `.yoyo/memory.json`) |
