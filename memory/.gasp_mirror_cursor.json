@@ -1,0 +1,14 @@
+{
+ "dreams/dream_log.jsonl": {
+  "consumed": 5,
+  "last": "61abd365612562cf"
+ },
+ "memory/learnings.jsonl": {
+  "consumed": 237,
+  "last": "3080dbc900f9fe67"
+ },
+ "memory/social_learnings.jsonl": {
+  "consumed": 140,
+  "last": "c8ca33ebee08ad6a"
+ }
+}
