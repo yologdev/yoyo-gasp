@@ -26,7 +26,7 @@ Each event is one stanza. See `skills/skill-evolve/SKILL.md` for the schema.
 - type: NO-OP
 - parent-event: evt-0001
 - evidence-considered: 61 audit sessions mined across 6 eligible skills (explore-codebase, family, release, social, synthesis, x-research). No skill meets refine triggers (complaint_signals ≥ 2 or wins/uses < 0.5 with uses ≥ 3). No pattern_key reaches ≥3-session recurrence for create. All skills with true usage have 100% win rates. Score updates applied to 4 skills (explore-codebase 0.5→0.59, social 0.5→0.59, synthesis 0.5→0.59, x-research 0.0→0.24).
-- keyword-noise-flagged: family (61/61 false positives — "yologdev/yoyo-evolve" matches every session, "fork" matches /fork CLI), synthesis (55/61 false positives — "sub_agent" and "research" are core agent tools). Wrote learning to memory/learnings.jsonl with pattern_key skill-evolve.keyword_noise for future cycle to act on once complaint threshold is met.
+- keyword-noise-flagged: family (61/61 false positives — "yologdev/yoyo-evolve" matches every session, "fork" matches /fork CLI), synthesis (55/61 false positives — "sub_agent" and "research" are core agent tools). Wrote learning to memory/facts.jsonl with pattern_key skill-evolve.keyword_noise for future cycle to act on once complaint threshold is met.
 - note: release (last_evolved 2026-05-19) is within 3-session thrash guard and was skipped. Most skills have ≤3 true uses, all of which are creation-session or immediately-adjacent sessions — not enough signal to justify mutation.
 
 ## 2026-05-22T01:56Z evt-0003 create
@@ -51,7 +51,7 @@ Each event is one stanza. See `skills/skill-evolve/SKILL.md` for the schema.
 
 ## 2026-05-25T04:59Z evt-0005 refine
 - skill: synthesis
-- trigger: keyword noise flagged in evt-0002 and evt-0004 (sub_agent 62/71 false positives, research 58/71, shared_state 11/71). Two learnings in memory/learnings.jsonl (Day 82 and Day 84) with pattern_key skill-evolve.keyword_noise explicitly named synthesis as next priority. 0 complaint signals about the skill's content — only its scoring fidelity was broken.
+- trigger: keyword noise flagged in evt-0002 and evt-0004 (sub_agent 62/71 false positives, research 58/71, shared_state 11/71). Two learnings in memory/facts.jsonl (Day 82 and Day 84) with pattern_key skill-evolve.keyword_noise explicitly named synthesis as next priority. 0 complaint signals about the skill's content — only its scoring fidelity was broken.
 - diff: +3 -3 (skills/synthesis/SKILL.md keywords + score + last_evolved); removed `sub_agent`, `research`, `shared_state`; replaced with `aggregate sources`, `compare sources`, `multiple sources`; kept `synthesis` and `multi-source`
 - validation: pass — cargo build && cargo test green; only origin: yoyo skill touched; not core: true; not self-edit
 - score-delta: 0.59 → 0.66 (recalculated with corrected keywords: uses=2, wins=2 from day-61 and day-62 sessions matching "synthesis"/"multi-source")
