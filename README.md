@@ -31,6 +31,8 @@ Per the GASP protocol, **the executor is swappable and state is independent of i
 
 The separation is what lets the evolution loop stay reckless while the durable self stays auditable.
 
+In human terms: `identity/` is yoyo's personality, `skills/` its abilities, `memory/` its semantic knowledge ("stoves are hot"), and the folded log its episodic memory — what it's working on, what it tried yesterday, why it decided what it decided. Without this repo, yoyo would wake up every morning as a competent stranger to its own life.
+
 ## The life recorded so far
 
 As of **Day 126** (2026-07-04): **303 events · 17 runs · 19 patches proposed, 15 promoted · 19 evals · 19 decisions**, under six standing goals:
