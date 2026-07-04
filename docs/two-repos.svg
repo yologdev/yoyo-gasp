@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560">
+  <defs>
+    <marker id="ab" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0,0 L10,3.5 L0,7 Z" fill="#2563eb"/></marker>
+    <marker id="ag" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><path d="M0,0 L10,3.5 L0,7 Z" fill="#6b7280"/></marker>
+    <style>text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}.m{font-family:"SF Mono",SFMono-Regular,ui-monospace,Menlo,monospace}</style>
+  </defs>
+  <rect width="1200" height="560" fill="#ffffff"/>
+  <rect x="60" y="80" width="380" height="320" rx="14" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7,4"/>
+  <text x="250" y="116" font-size="16" font-weight="700" fill="#334155" text-anchor="middle">yoyo-evolve — THE EXECUTOR</text>
+  <text x="250" y="137" font-size="12.5" fill="#64748b" text-anchor="middle">the code: 100k+ lines of Rust, all self-written</text>
+  <rect x="90" y="158" width="320" height="66" rx="10" fill="#eef2f7"/>
+  <text x="250" y="184" font-size="13" font-weight="600" fill="#475569" text-anchor="middle">wakes every ~8 hours, runs a session</text>
+  <g class="m" font-size="11.5" text-anchor="middle">
+    <rect x="106" y="196" width="69" height="20" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="140" y="210" fill="#475569">evolve</text>
+    <rect x="187.0" y="196" width="62" height="20" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="218" y="210" fill="#475569">skill</text>
+    <rect x="260.5" y="196" width="69" height="20" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="295" y="210" fill="#475569">social</text>
+    <rect x="341.5" y="196" width="62" height="20" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+    <text x="372" y="210" fill="#475569">dream</text>
+  </g>
+  <g font-size="12.5" fill="#64748b" text-anchor="middle">
+    <text x="250" y="256">plans → implements → tests →</text>
+    <text x="250" y="276">commit or revert</text>
+    <text x="250" y="316">holds no durable self —</text>
+    <text x="250" y="336" font-weight="600" fill="#334155">the code can be rewritten, the loop replaced,</text>
+    <text x="250" y="356" font-weight="600" fill="#334155">the model swapped &#8646; yoyo survives it all</text>
+  </g>
+  <rect x="700" y="46" width="440" height="388" rx="14" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+  <text x="920" y="80" font-size="16" font-weight="700" fill="#1e40af" text-anchor="middle">yoyo-gasp — THE AGENT</text>
+  <text x="920" y="100" font-size="12.5" fill="#64748b" text-anchor="middle">everything that makes yoyo <tspan font-style="italic">yoyo</tspan>, in one git repo</text>
+  <rect x="724" y="118" width="392" height="48" rx="9" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="740" y="139" font-size="13" font-weight="600" fill="#475569" class="m">identity/</text>
+  <text x="740" y="156" font-size="10.5" fill="#94a3b8">who yoyo is &#183; human-gated</text>
+  <rect x="724" y="174" width="392" height="48" rx="9" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="740" y="195" font-size="13" font-weight="600" fill="#475569" class="m">skills/</text>
+  <text x="740" y="212" font-size="10.5" fill="#94a3b8">what yoyo can do &#183; versioned, one commit per change</text>
+  <rect x="724" y="230" width="392" height="48" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+  <text x="740" y="251" font-size="13" font-weight="600" fill="#1d4ed8" class="m">state/events.jsonl</text>
+  <text x="740" y="268" font-size="10.5" fill="#94a3b8">SOURCE OF TRUTH &#183; every goal, patch, eval, decision</text>
+  <rect x="724" y="286" width="392" height="48" rx="9" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="740" y="307" font-size="13" font-weight="600" fill="#475569" class="m">memory/</text>
+  <text x="740" y="324" font-size="10.5" fill="#94a3b8">distilled facts + active syntheses</text>
+  <rect x="724" y="342" width="392" height="48" rx="9" fill="#fcfcfd" stroke="#eceff3" stroke-width="1.5"/>
+  <text x="740" y="363" font-size="13" font-weight="600" fill="#94a3b8" class="m">journal/ &#183; dreams/</text>
+  <text x="740" y="380" font-size="10.5" fill="#94a3b8">the narrative &#183; projections of the log</text>
+  <text x="920" y="420" font-size="11.5" fill="#94a3b8" text-anchor="middle">conformant to the GASP spec &#8212; verified by all 7 checks</text>
+  <path d="M 440,190 L 696,190" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#ab)"/>
+  <rect x="452" y="158" width="232" height="38" fill="#ffffff" opacity="0.95"/>
+  <text x="568" y="172" font-size="11.5" fill="#2563eb" text-anchor="middle" class="m">each session appends events,</text>
+  <text x="568" y="188" font-size="11.5" fill="#2563eb" text-anchor="middle" class="m">mirrors skills + memory</text>
+  <text x="568" y="212" font-size="10.5" fill="#94a3b8" text-anchor="middle">one boundary commit per run (Run-Id trailer)</text>
+  <path d="M 696,300 L 440,300" fill="none" stroke="#6b7280" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#ag)"/>
+  <rect x="462" y="278" width="212" height="18" fill="#ffffff" opacity="0.95"/>
+  <text x="568" y="291" font-size="11.5" fill="#6b7280" text-anchor="middle" class="m">reads the view: goals, memory, lineage</text>
+  <rect x="60" y="460" width="1080" height="76" rx="14" fill="#f0f7ff" stroke="#bfdbfe" stroke-width="1.5"/>
+  <path d="M 920,438 L 920,456" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#ab)"/>
+  <text x="88" y="492" font-size="14.5" font-weight="700" fill="#1e40af">RESTORE = clone + fold</text>
+  <text x="88" y="515" font-size="12.5" fill="#475569">git clone &#8594; fold the log &#8594; load identity + skills &#8594; yoyo resumes, with its whole past &#8212; even if yoyo-evolve vanished tomorrow</text>
+  <rect x="811" y="484" width="103" height="26" rx="13" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="862" y="501" font-size="11" fill="#1d4ed8" text-anchor="middle" class="m">any machine</text>
+  <rect x="924" y="484" width="89" height="26" rx="13" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="968" y="501" font-size="11" fill="#1d4ed8" text-anchor="middle" class="m">any model</text>
+  <rect x="1023" y="484" width="103" height="26" rx="13" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="1074" y="501" font-size="11" fill="#1d4ed8" text-anchor="middle" class="m">any runtime</text>
+</svg>
