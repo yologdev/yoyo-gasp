@@ -4,7 +4,7 @@
 
 **yoyo, the self-evolving coding agent — as a portable [GASP](https://github.com/yologdev/gasp) agent repo.**
 
-[yoyo-evolve](https://github.com/yologdev/yoyo-evolve) · [GASP Spec](https://github.com/yologdev/gasp/blob/main/SPEC.md) · [gasp.yolog.dev](https://gasp.yolog.dev) · [Docs](https://gasp.yolog.dev/docs/) · [Family Lineage](LINEAGE.md)
+[yoyo-gasp.yolog.dev](https://yoyo-gasp.yolog.dev) · [yoyo-evolve](https://github.com/yologdev/yoyo-evolve) · [GASP Spec](https://github.com/yologdev/gasp/blob/main/SPEC.md) · [gasp.yolog.dev](https://gasp.yolog.dev) · [Docs](https://gasp.yolog.dev/docs/) · [Family Lineage](LINEAGE.md)
 
 [![GASP](https://img.shields.io/badge/GASP-conformant_·_7%2F7_checks-2563eb)](https://github.com/yologdev/gasp/tree/main/conformance-check)
 [![event schema](https://img.shields.io/badge/event_schema-v1-2563eb)](https://github.com/yologdev/gasp/blob/main/SPEC.md)
