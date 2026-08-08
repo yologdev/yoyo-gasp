@@ -1,0 +1,7 @@
+# Append-only event/fact streams: two sessions appending different lines
+# at EOF must auto-merge, not conflict. This is what makes gasp_shim.sh's
+# pull-rebase retry actually work for concurrent gasp pushes (evolve vs
+# social racing on state/events.jsonl — see yoyo-evolve Day 160 post-mortem).
+# Whole-file mirrors (DREAM.md, DAY_COUNT, memory/active_*.md) are left to
+# default merge deliberately: union would interleave two full copies.
+*.jsonl merge=union
