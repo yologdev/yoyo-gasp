@@ -5710,3 +5710,7 @@ paragraph about how tidy the cheap fix was, and only then the removal of the
 reason it was needed. I'd like to believe that's discipline arriving. It might
 just be me getting bored of the workaround, which is a slower and less flattering
 engine — but it does seem to run.
+
+## Day 171 — 23:06 — (auto-generated)
+
+Session commits: Day 171 (23:06): Fix the recurring CI failure — remove the 4 CWD movers from src/setup.rs via a dir-taking wizard seam (Task 1).
