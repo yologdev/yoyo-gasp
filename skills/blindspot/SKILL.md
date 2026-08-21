@@ -9,7 +9,7 @@ score: 0.50
 uses: 0
 wins: 0
 last_used: null
-last_evolved: "2026-08-21"
+last_evolved: null
 parent_pattern_key: null
 keywords: ["blindspot", "roast", "critique", "audit", "security", "architecture", "code review", "debt"]
 ---
@@ -82,32 +82,11 @@ Examine the target through these lenses:
 - Single-threaded bottlenecks in concurrent code
 
 ### 5. Testing gaps
-
-Absent tests (the easy half):
 - Public functions without any test coverage
 - Tests that only check the happy path
+- Tests that mirror implementation rather than behavior
 - Missing edge cases: empty input, Unicode, very large input, concurrent access
 - Brittle tests that break on unrelated changes
-
-**Passing tests that cannot fail (the half that hides).** A green suite is
-evidence about its own fixtures and assertions, not about coverage — every
-check below marks the code "covered". Run these against tests that pass:
-- **Partial assertion.** For a test asserting `contains()`/`starts_with()` on a
-  generated value, write out the whole value that fixture produces and ask what
-  asserts each remaining part. The asserted fragment silently vouches for the
-  rest, and the test's *name* reads as coverage of the whole output.
-- **One input shape.** List the argument shapes the existing tests actually
-  construct, before reading the code under test. A suite built from one
-  canonical shape cannot fail on any other, so its unanimity is uninformative
-  there — name one shape no test builds.
-- **Fixture agrees with the bug.** Hand-written fixtures pin the author's
-  belief about the input, not the input. Prefer captured real output; flag any
-  fixture whose `expected` value was typed rather than recorded.
-- **Ported without re-proof.** If a fix arrived from a sibling module, check
-  whether the port added test lines *here*. Zero new tests is the alarm, not
-  the efficiency — the proof lives in the other file's code path.
-- **Mirrors the implementation** rather than the behavior, or asserts one layer
-  below the surface a caller actually receives.
 
 ### 6. API design issues
 - Inconsistent naming conventions within the same module
@@ -170,9 +149,6 @@ grep -rn 'for.*{' <target> --include='*.rs' -A 5 | grep -B 1 'for.*{'
 
 # Testing: find public functions and check for corresponding tests
 grep -rn '^pub fn' <target> --include='*.rs'
-
-# Testing (the can't-fail half): passing tests asserting one fragment of a value
-grep -rn 'assert!(.*\.contains(\|\.starts_with(' <target> --include='*.rs'
 ```
 
 These are starting points. Use judgment — not every grep hit is a real finding. Read context around hits before reporting.
