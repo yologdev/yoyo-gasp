@@ -64,3 +64,7 @@ event — all in one human-gated commit (GASP Part I, commit rule 4).
 ## Credential exclusion
 
 Credentials and raw executor sessions must never enter this public state repository. See [credential safety](docs/credential-safety.md) for host-side credential isolation, task export rules and optional local scanning hooks. These files do not change the executor or install hooks in existing remote writers.
+
+## Optional task recovery
+
+The proposed [task recovery binding](docs/task-recovery.md) documents execution checkpoints and task-specific restore against the optional GASP extension. It does not change identity, core conformance or evolution semantics, and does not claim deployed recovery support.
