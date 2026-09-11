@@ -1,2 +1,25 @@
 .agent/lease
 .agent/HEAD
+
+# Machine-local credentials and executor state are never canonical agent state.
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+.yoyo.toml
+.yoyo/
+yoyo-session.json
+.agent/bin/
+.agent/cloudflare-ingest.lock/
+.ssh/
+.aws/
+.wrangler/
+*.pem
+*.key
+credentials.json
+secrets.json
+# Raw recovery payloads stay private; only reviewed manifests may be committed.
+execution/private/
+
+__pycache__/
+*.pyc
