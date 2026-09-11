@@ -33,3 +33,8 @@ Required checkpoint artifacts survive sandbox deletion and remain retained while
 Before activation, demonstrate the protocol acceptance cases, especially two-task isolation, custom save/load success and failure, unattended save behavior, container deletion and restore, external artifact export/import, and uncertain-publication reconciliation. Keep current Twitter production behavior until a replacement adapter passes these checks. No runtime or canonical task-event changes are made by this documentation.
 
 The published protocol draft was introduced in `yologdev/gasp@f24bb14`. Credential isolation follows [credential-safety.md](credential-safety.md). Recovery support remains pending harness acceptance tests; no Rust CLI changes are authorized by this binding.
+
+
+## Isolated harness evidence — 2026-09-11
+
+The [Cloudflare recovery lab](https://github.com/yuanhao/yoyo-cloudflare/tree/main/labs/recovery) passed real unmodified CLI save/load and isolated task restoration after container destruction, using synthetic state and a local simulated model. [CI evidence](https://github.com/yuanhao/yoyo-cloudflare/actions/runs/34579498100) and remote reports are retained there. This is partial acceptance evidence: no canonical GASP task checkpoint writer, complete extension manifest, writer-fencing tests, real model gateway or production task execution is deployed. Existing evolution and Twitter behavior are unchanged.
