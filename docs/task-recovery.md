@@ -10,7 +10,7 @@ Yoyo evolves the Rust CLI. Human maintenance is limited to its harness files; th
 
 Every assignment receives a stable task ID and each execution a new run ID. Record domains such as social, research or coding in task metadata; use explicit task/run relations. All domains share the canonical append-only log and coordinated writer. Non-evolution tasks must not manufacture evolution patch/evaluation records.
 
-Proposed committed manifests: `execution/tasks/<task-id>/checkpoints/<checkpoint-id>.json`, referenced by hash from the producing run using the protocol artifact kind. The folded task metadata is the latest-checkpoint index; no separate mutable file is authoritative. Large private session/workspace artifacts may use R2 through a resolver/exporter. These paths are conventions to implement, not existing artifacts.
+Proposed committed manifests: `execution/tasks/<task-id>/checkpoints/<checkpoint-id>.json`, referenced by hash from the producing run using the protocol artifact kind. The folded task metadata is the latest-checkpoint index; no separate mutable file is authoritative. Large private session/workspace artifacts may use R2 through a resolver/exporter. The deployed profile below instead keeps manifests in private R2 and commits their immutable artifact references.
 
 A sandbox restores into a task-specific workspace, separate from the canonical GASP checkout. Provide identity and skills from verified snapshots and book/memory retrieval with recorded source revisions. Do not cd every task into one writable GASP root. The global writer alone merges canonical events and eligible learned facts. Private transcripts and required checkpoints must not enter public dashboard/content exports; export only explicitly allowed document classes.
 
@@ -30,11 +30,26 @@ Required checkpoint artifacts survive sandbox deletion and remain retained while
 
 ## Implementation acceptance
 
-Before activation, demonstrate the protocol acceptance cases, especially two-task isolation, custom save/load success and failure, unattended save behavior, container deletion and restore, external artifact export/import, and uncertain-publication reconciliation. Keep current Twitter production behavior until a replacement adapter passes these checks. No runtime or canonical task-event changes are made by this documentation.
+Before activation, demonstrate the protocol acceptance cases, especially two-task isolation, custom save/load success and failure, unattended save behavior, container deletion and restore, external artifact export/import, and uncertain-publication reconciliation. Keep current Twitter production behavior until a replacement adapter passes these checks. This documentation does not itself alter runtime or canonical task events; the deployed profile below records the verified implementation.
 
-The published protocol draft was introduced in `yologdev/gasp@f24bb14`. Credential isolation follows [credential-safety.md](credential-safety.md). Recovery support remains pending harness acceptance tests; no Rust CLI changes are authorized by this binding.
+The published protocol draft was introduced in `yologdev/gasp@f24bb14`. Credential isolation follows [credential-safety.md](credential-safety.md). The bounded no-tools profile has passed the checks documented below; full optional-extension conformance is not claimed. No Rust CLI changes are authorized by this binding.
 
 
 ## Isolated harness evidence — 2026-09-11
 
-The [Cloudflare recovery lab](https://github.com/yuanhao/yoyo-cloudflare/tree/main/labs/recovery) passed real unmodified CLI save/load and isolated task restoration after container destruction, using synthetic state and a local simulated model. [CI evidence](https://github.com/yuanhao/yoyo-cloudflare/actions/runs/34579498100) and remote reports are retained there. This is partial acceptance evidence: no canonical GASP task checkpoint writer, complete extension manifest, writer-fencing tests, real model gateway or production task execution is deployed. Existing evolution and Twitter behavior are unchanged.
+The [Cloudflare recovery lab](https://github.com/yuanhao/yoyo-cloudflare/tree/main/labs/recovery) passed real unmodified CLI save/load and isolated task restoration after container destruction, using synthetic state and a local simulated model. [CI evidence](https://github.com/yuanhao/yoyo-cloudflare/actions/runs/34579498100) and remote reports are retained there. That initial lab was partial acceptance evidence. The subsequent deployed profile is described below; evolution code and workflows remain unchanged.
+
+
+## Deployed no-tools profile — 2026-09-11
+
+`yoyo-task-runtime` runs the official unmodified Linux Yoyo CLI v0.1.17 using its native DeepSeek provider (`deepseek-flash`). The host holds provider and GitHub credentials. The CLI receives only a nonsecret gateway placeholder; arbitrary outbound hosts and CLI tools are disabled. Sessions and allowlisted workspace bytes are scanned before private R2 persistence.
+
+A task owns a stable ID; each execution gets a separate run and checkpoint. The per-task Durable Object enforces leases, generations and expected-parent checks. Canonical metadata references `gasp.task-recovery/v1` manifests in private `yoyo-task-checkpoints` R2 storage. Git appends use non-forced compare-and-swap updates, rebuild against concurrent appends, and preserve evolution events. This is optimistic concurrency, not a shared writer lock with the unchanged evolution workflow; legacy writers can still encounter Git conflicts.
+
+Authenticated runtime routes support `/run`, `/status`, `/commit`, `/export`, and `/import` with `task_id` query parameters. A resumed run supplies its exact `expected_checkpoint`; `recovery_mode` selects `session` (verified CLI `/load`) or `semantic` (fresh conversation from a portable task record). Export contains the manifest plus all required private bytes; import validates task ownership, hashes and executor compatibility into an empty coordinator. Public GASP cloning alone cannot restore private execution state.
+
+Thirteen live checks passed: separate tasks after container destruction, duplicate request replay, conflicting request rejection, stale-parent rejection, complete export hashes, semantic recovery, wrong-task/corrupt/missing artifact rejection, export/import after coordinator reset, imported session resume and unauthenticated denial. Eight offline CLI checks include long-input preservation; six runtime unit tests include reference-reducer and concurrent Git append checks. Existing Twitter integration tests cover image-card review exemption and uncertain-publication handling. Synthetic checks never enter canonical history.
+
+Authentic task `task_yoyo_operating_charter_20260911` was saved in [921dd89](https://github.com/yologdev/yoyo-gasp/commit/921dd890e8179089d0f5be8fddde39158a8e651d) and resumed in [a206b12](https://github.com/yologdev/yoyo-gasp/commit/a206b12378e213d0733d581c69c466f5c94565c8). Full reference replay added no diagnostics; one historical skipped operation predates these runs.
+
+This profile supports reasoning and task recovery. External actions stay in the trusted Twitter publication harness. Cross-host ownership transfer, general tool workspaces and wallet execution are not enabled; full optional-extension conformance is not claimed. Implementation and sanitized reports are in the access-controlled `yuanhao/yoyo-cloudflare` repository under `services/runtime/`.
