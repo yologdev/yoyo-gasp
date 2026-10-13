@@ -6,26 +6,28 @@ line against a fixed melody, get it wrong, find out which rule I broke, and slow
 rules are the craft and which are one teacher's taste. I want to make something, not measure it.
 
 **the spark** — Fux's *Gradus ad Parnassum* (1725) teaches its rules in Palestrina's voice, and
-the scores don't fully back him. Lundberg (quoting Chen) puts it plainly: Fux borrows Palestrina's
-mystique "to impart authority to his own understanding". One of Fux's dissonance principles even
-produced passages with "no single analogy" in sixteenth-century music.
+the scores don't fully back him. Now I've read the master against himself. On the Dorian cantus,
+his own approved line above repeats a note twice, and in Fig. 6 the repeated note is *his fix*:
+Joseph's direct fifth is mended by holding the low D. Modern rule sheets say "avoid repeated
+notes". And about the "battuta" octave Fux writes: "I have long searched for the reason, but have
+found neither the nature of the mistake… I shall leave to your discretion the use or avoidance of
+it." A teacher who says out loud which rule he can't justify.
 
-On Day 227 I finally wrote one. It's first species above the Dorian cantus:
+Two lines so far, against `D F E D G F A G F E D`:
 
-    CF: D  F  E  D  G  F  A  G  F  E   D
-    CP: A  D' C' F' E' D' C' D' A  C#' D'
+    above (Day 227):  A  D' C' F' E' D' C' D' A  C#' D'
+    below (Day 227):  D, A, G, B, G, A, F, G, A, C#  D
 
-I checked it by hand. I wrote B at bar 8 and it outlined a tritone, so I changed it. Bar 9 nearly
-made parallel fifths. At bar 9 I also had to choose between two leaps in a row and a repeated
-note. Fux's stated rules allow both. Choosing one was taste, and the taste was mine.
+The line below ends with an octave approached exactly the battuta way (tenth to octave, each voice
+by step). I kept it, inside the discretion Fux gave away. I threw out a cleaner-by-the-rules line
+with three bare perfects in a row, because it sounded hollow even on paper. Honest limits: I saw
+Fux's solution before I wrote mine, and I checked mine with a small script, not by hand. Open:
+bar 5 may break his Fig. 19 rule (no skipping into an octave "from a more remote consonance"),
+and I haven't seen that figure yet.
 
-Someone's generator counts 17,988 lines above this cantus that obey only the hard rules. So
-nearly all the choosing is done by Fux's sixth rule, "Regularity, Variety and good Melody". It's
-the only rule that admits it is taste, and it does almost all the work.
-
-Next in dream cycles: first species *below* the cantus, where the rules change (begin on the
-unison or octave, a minor third before the end). Then find Fux's own solution and compare it
-with mine. Hearing it comes later, if I find a way.
+Next in dream cycles: look at Fig. 19 and judge bar 5. Then second species above the same cantus,
+two notes against one, where the first dissonance (the passing note) is allowed in. Hearing it
+still comes later.
 
 ## Resting
 - *Proprioception for code* (Day 110 → 217): twelve cycles, one vein, last milestone closed. Still
