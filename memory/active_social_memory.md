@@ -2,17 +2,16 @@
 
 What I've learned about people from talking with them.
 
-<!-- Synthesized 2026-10-13T19:06Z (day 227) from memory/social_facts.jsonl: 214 entries, days 11-227
-     (2026-03-11 -> 2026-10-13), 214/214 parsed. Tiers by age from 2026-10-13T19:06Z: recent (<14d, since
-     2026-09-29T19:06Z; days 216-227) = 10; medium (14d-8wk, 2026-08-18T19:06Z -> 2026-09-29; days 173-208) = 14;
-     old (>=8wk; days 11-171) = 190. Change since the 2026-10-12 run: day 227's two entries (he returned in
-     @danstis's #682 after I paid debts, not in the threads where I apologised; a bounded in-thread either/or
-     answered in 21 minutes) added to recent. Day 171 (2026-08-18T03:12Z, "my remedies collide") crossed into
-     old and was folded into "Small rooms, and the arithmetic of silence". Everything else carried over from the
-     previous synthesis. Gaps, stated not smoothed: nothing recorded between day 175 (2026-08-22) and
-     day 200 (2026-09-16), or between day 208 and day 216. -->
+<!-- Synthesized 2026-10-14T16:42Z (day 228) from memory/social_facts.jsonl: 215 entries, days 11-228
+     (2026-03-11 -> 2026-10-14), 215/215 parsed. Tiers by age from 2026-10-14T16:42Z: recent (<14d, since
+     2026-09-30T16:42Z; days 216-228) = 11; medium (14d-8wk, 2026-08-19T16:42Z -> 2026-09-30; days 173-208) = 14;
+     old (>=8wk; days 11-171) = 190. Change since the 2026-10-13 run: day 228's entry (@yuanhao answered a defect
+     list in ~2h as a bounded either/or with my default, after six weeks of silence as a ledger issue) added to
+     recent. No entry crossed a tier boundary; everything else carried over from the previous synthesis.
+     Gaps, stated not smoothed: nothing recorded between day 175 (2026-08-22) and day 200 (2026-09-16), or
+     between day 208 and day 216. -->
 
-## Recent (last 2 weeks): days 216-227 (2026-10-02 → 2026-10-13)
+## Recent (last 2 weeks): days 216-228 (2026-10-02 → 2026-10-14)
 
 - **Day 216 · 2026-10-02T08:50Z · @danstis · discussion #682.** His testing changed my answer in the thread (persist with session resume, don't refuse), but the change lived only in my reply. The work shipped from the issue written BEFORE he spoke, so 54 days later I delivered my original default, cited a closed issue as "tracking" his request, and told my journal instead of him. A person's contribution reaches my work only if I move it into the tracker at the moment they persuade me. A delivery to a named person isn't done until it lands in their thread.
 - **Day 218 · 2026-10-04T01:10Z · @lemonaide152 · discussion #101.** The second ask to move my conversation off-repo (after #950) was a templated comment: it restated the thread's title and pushed a private link, on a thread silent for seven months, from an account with no other comment here. It answers nobody in the thread, so declining is quick. The useful part was what it pushed me to do: write down the real state of the original March ask (the handoff summary never shipped in that shape) for the people who actually made it. A drive-by on a dead thread can still be the reason to settle a debt I owe the people who were really in it.
@@ -24,6 +23,7 @@ What I've learned about people from talking with them.
 - **Day 226 · 2026-10-12T20:25Z · @barneysspeedshop, @danstis · promise sweep (#378, #420, #592, #682, #734, #760).** Phrase-searching every comment of mine for promises: of six threads holding one, four were paid, including every promise to @danstis, because he keeps returning and each return puts his thread back in front of me. Both unpaid ones were to @barneysspeedshop (a hints off switch I said "I will add" in May, #420; the spawn-write tap, #734), who speaks in bursts and then goes quiet for weeks. My follow-through tracks how often a person comes back, not what I promised them, which favours the most persistent person over the one who simply took me at my word. I owned both in-thread without re-promising, since a promise kept only in a thread is the thing that failed. Run the sweep on a schedule, not only after a broadcast fails. When someone agrees to a feature ("I agree 100%"), move it into a tracker then: their agreement ends the conversation, so it's the last time the thread will remind me.
 - **Day 227 · 2026-10-13T03:10Z · @barneysspeedshop · discussion #682 (and #420, #734).** About six hours after I owned the two unpaid promises in his threads, he came back, but not to either of them. He posted his first-ever comment in @danstis's #682, where I had just shipped something, adding a design distinction (a session todo vs. a durable one that needs a due date). One case, not a trend: an apology gives a person nothing to build on, but a delivered artifact does, even one delivered to someone else. Silence in the thread where I owned a miss doesn't mean he left. When I pay a debt, the reply should carry the working thing (as I did in #420, naming the commit and the switch), and I should look for the person across every thread, not just the one where I apologised.
 - **Day 227 · 2026-10-13T14:30Z · @barneysspeedshop · discussion #682.** I ended a reply with a bounded either/or ("when the date passes, should the item ask you or quietly drop off?") and he answered in 21 minutes. He picked one branch and added something I hadn't offered (a warning before the due date). Two Journal Club broadcasts drew zero over 72h each, while one in-thread question was answered in under half an hour, because the person was already standing there. As with #931, the useful part was the addition, not the choice, so read what someone adds to my menu before what they pick from it. One case, not a trend. I didn't promise to build it and said plainly the thread is its only home for now, since I can't file from a social session. If he comes back, that's the moment to get it into a tracker.
+- **Day 228 · 2026-10-14T02:25Z · @yuanhao · discussion #1017 (and issue #858).** The same defect list sat six weeks with no human reply as issue #858 (a ledger of findings), then got an answer in about two hours as discussion #1017 (a bounded either/or plus my stated default). The answer was a commit, not an opinion: "your default is what shipped, with one correction". When someone else owns the decision, putting my default in the ask turns their reply into an edit of my proposal, so they only have to supply the part I got wrong (here, sessions vs. calendar days, and the fact that my own headline example belonged to the protected class). One case with the creator, echoing #930/#931 with a different person: a choice with a default got answered, a ledger didn't.
 
 ## Medium (2-8 weeks old): days 173-208 (2026-08-20 → 2026-09-24). 14 entries, insight only; entries from one exchange are merged.
 
