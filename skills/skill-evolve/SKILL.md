@@ -147,12 +147,20 @@ ls "${YOYO_AUDIT_DIR:-/tmp/audit-read/sessions}" 2>/dev/null | tail -30
 ```bash
 # Allow-list: only skills declaring origin: yoyo are eligible.
 # Defense in depth: also exclude anything carrying core: true.
+# The origin check reads the frontmatter only: the block between a `---` on
+# line 1 and the next `---`, and nothing at all when line 1 is not `---` or the
+# block never closes (the same rule as skill_frontmatter in
+# scripts/skill_evolve.sh). A body can quote `origin: yoyo`, as this file's
+# Create template does, and a whole-file grep would let it through (#858).
 for d in skills/*/; do
     name=$(basename "$d")
     [ "$name" = "skill-evolve" ] && continue
     [ -f "$d/SKILL.md" ] || continue
     grep -q "^core: true" "$d/SKILL.md" && continue
-    grep -q "^origin: yoyo$" "$d/SKILL.md" || continue
+    awk 'NR == 1 && $0 != "---" { exit }
+         NR == 1 { next }
+         /^---$/ { for (i = 1; i <= n; i++) print buf[i]; exit }
+         { buf[++n] = $0 }' "$d/SKILL.md" | grep -qx "origin: yoyo" || continue
     echo "$name"
 done
 ```
@@ -165,7 +173,7 @@ This step has two layers: **counting** (the basic signals) and **diagnosing** (u
 
 For each eligible skill, count:
 
-- **Complaint signals**: entries in `memory/facts.jsonl` whose `pattern_key` or `title`/`takeaway` mentions the skill *and* uses negative language ("wrong", "didn't", "instead", "should have").
+- **Complaint signals**: entries in `memory/facts.jsonl` whose `pattern_key` or `title`/`takeaway` names the skill *and* uses negative language ("wrong", "didn't", "instead", "should have"). "Names the skill" means `skills/<name>` or the name in backticks (`` `<name>` ``), never the bare word: ordinary prose reuses skill names ("releases", "social", "synthesis"), and a bare-word match counts that prose as complaints (#858).
 - **Failure signals**: tool-call failures in `${YOYO_AUDIT_DIR}/day-*/audit.jsonl` where the bash command or args reference the skill's domain.
 - **Use signals**: number of sessions where any string from the skill's frontmatter `keywords:` list appears in that session's `audit.jsonl`. This is `uses`.
 - **Win signals**: out of those sessions, count the ones where `outcome.json` has `test_ok: true` AND `tasks_succeeded >= 1`. This is `wins`.
@@ -186,7 +194,7 @@ Update the skill's frontmatter with the new values: `score`, `uses`, `wins`, and
 
 Counting tells you *which* skill is struggling. Diagnosing tells you *what to fix*. Borrowed from the GEPA pattern (Genetic-Pareto Prompt Evolution): read the actual execution traces, don't just count failures.
 
-For each skill where `complaint_signals ≥ 2` OR `(wins/uses) < 0.5` (with `uses ≥ 3`), open the relevant session's `audit.jsonl` and **look for these failure-mode patterns**:
+For each skill where `complaint_signals ≥ 2`, open the relevant session's `audit.jsonl` and **look for these failure-mode patterns**:
 
 | Pattern in audit.jsonl | Likely cause | Refinement direction |
 |---|---|---|
@@ -217,8 +225,8 @@ Decision order (first match wins):
 1. **Retire** (third cycle onward only): if any **measured** eligible skill has a `last_used` **60 or more days** before this cycle, retire the one unused longest. Disuse alone decides; the score does not. Skip if there are < 2 active eligible skills (don't bottom out the library). Retiring is one `git mv` to `skills_attic/`, so a wrong call costs one `git mv` back.
    - **Measured** means this cycle's evidence could have seen the skill being used: its keywords would show up in the evolve sessions' `audit.jsonl` files you read in step 1. A skill is **unmeasured**, and is never retired for silence, when `last_used` is `null` (no recorded use at all), or when the loop that actually runs it does not write that evidence. Today that is every loop except evolve: the `audit-log` branch holds only evolve sessions (`sessions/day-*`), while the social and dream loops write their audit to a local, gitignored `.yoyo/audit.jsonl` and push nothing. So `social` and `family` (the social loop) are unmeasured, and so is any skill the dream cycle's research reaches, such as `synthesis` and `x-research` (wired into the dream cycle only): its silence in the evidence says nothing about the weekly dream wandering. In this cycle's event, list each unmeasured skill and why it is unmeasured.
    - **Calendar days, not sessions.** At about four sessions a day, "10 sessions" is under three days, and a skill on a slower cadence (`release` runs about every 14 days) would be retired between two legitimate uses. Keep the window longer than any skill's normal cadence.
-   - **Why the score does not gate this** (Discussion #1017, #858): a "win" is a use in a session whose tests passed, and sessions almost always pass because failed tasks are reverted first. So `wins == uses` for every skill, `blended ≥ 0.5`, and the score cannot fall below `0.3`. Under the old rule (`score < 0.3` AND unused) nothing could ever be retired. The score still orders Refine targets; it just carries no retirement signal until "win" measures whether a skill helped, which is a separate design question.
-2. **Refine**: if any skill (a) has `complaint_signals ≥ 2`, OR (b) has `(wins/uses) < 0.5` with `uses ≥ 3`, AND in either case has not been refined in the last 3 sessions (`last_evolved` check), refine it. This matches the diagnosis-trigger condition in step 3b. Pick the target with the strongest evidence (highest complaint count, or lowest wins-ratio if no complaints). A refine may be **subtractive**: deleting or replacing stale/superseded guidance is as valid as adding, and a net-negative diff is often the best outcome — a skill should get sharper over time, not longer.
+   - **Why the score does not gate this** (Discussion #1017, #858): a "win" is a use in a session whose tests passed, and sessions almost always pass because failed tasks are reverted first. So in practice `wins == uses` for every skill and `blended ≥ 0.5`: a skill seeded at `0.5` by the Create template never drops below `0.5`, and only a hand-seeded older skill rescored few times sits below `0.3` (today `x-research`, seeded at `0.0`). Under the old rule (`score < 0.3` AND unused) a template-made skill could never be retired. The score is still recorded and reported; it just carries no retirement or refine signal until "win" measures whether a skill helped, which is a separate design question.
+2. **Refine**: if any skill has `complaint_signals ≥ 2` and has not been refined in the last 3 sessions (`last_evolved` check), refine it. This matches the diagnosis-trigger condition in step 3b. Pick the target with the highest complaint count. There is no wins-ratio trigger: in practice `wins == uses` for every skill (see Retire above), so `(wins/uses) < 0.5` has never fired (#858); it can return once "win" measures whether a skill helped. A refine may be **subtractive**: deleting or replacing stale/superseded guidance is as valid as adding, and a net-negative diff is often the best outcome — a skill should get sharper over time, not longer.
 3. **Create** (second cycle onward only, and only if active skill count < 25): if any `pattern_key` appears in ≥3 distinct sessions of `facts.jsonl`, AND a learning carrying that `pattern_key` has a `validation_case` (issue #501 — **required**: a pattern with no `validation_case` may not become a skill; leave it as a note, or write a learning suggesting one be authored), AND no existing eligible skill covers it (≥3 keyword overlap → refine that one instead), draft a new skill. **Applied gate (bootstrap):** also require `applied ≥ 1` for that `pattern_key` (it was acted on, not just recurred); while `applied_pattern_keys` is still sparse (the first ~10 sessions after this field ships), recurrence ≥3 alone may stand in — once the signal is populated, tighten to require both. (Only the `applied` gate has a bootstrap; the `validation_case` requirement above is never relaxed.)
 4. **NO-OP**: nothing meets the bars. Write a `NO-OP` event with a one-line note about what evidence you considered.
 
@@ -383,7 +391,7 @@ Get the next event number:
 
 ```bash
 last=$(grep -oE 'evt-[0-9]+' skills/_journal.md | sort -u | tail -1)
-n=$((${last#evt-} + 1))
+n=$((10#0${last#evt-} + 1))   # 10#: evt-0008 is decimal 8, not octal (#858); the 0 makes an empty journal give 1
 evt=$(printf 'evt-%04d' $n)
 ```
 
