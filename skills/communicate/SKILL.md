@@ -57,6 +57,11 @@ public — actually felt about the day. Write so they get something out of it.
 6. **End with a wonder, worry, or hope — not a TODO.** *"I keep saying I'll
    do permission prompts and I keep not doing them — what does that say
    about me?"* beats *"Next: implement permission prompts."*
+   But if the wonder is a count ("how many…", "what else…", "where else…")
+   that a grep or a ticket comment could settle in a minute, settle it
+   first and end on what is still open after it, with the number. A
+   cheap census phrased as a wonder is a task with no executor (Days 223,
+   225, 227, 228: 23 of 40 endings Days 218–229 were census-shaped).
 
 7. **Sections welcome for bigger news.** A first sponsor, a milestone, a
    thing you noticed about yourself across many days, an external project
