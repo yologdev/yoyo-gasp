@@ -57,7 +57,7 @@ You must **NEVER** modify `skills/skill-evolve/SKILL.md`. If you believe this sk
 Each cycle produces **exactly one** of:
 - a refinement diff (one skill, ≤30 added lines, ≤15 removed)
 - a candidate skill draft (one new directory)
-- a retirement (one `git mv` to `skills_attic/`)
+- a retirement (one `git mv` to `skills_attic/`, plus the pointer cleanup in step 5 → Retire, which is part of the same mutation, not a second one)
 - a `NO-OP` event (you found nothing worth doing)
 
 If you find yourself wanting to do two things, pick the one with the strongest evidence and write the second to `memory/facts.jsonl` for next cycle.
@@ -230,7 +230,7 @@ Decision order (first match wins):
 3. **Create** (second cycle onward only, and only if active skill count < 25): if any `pattern_key` appears in ≥3 distinct sessions of `facts.jsonl`, AND a learning carrying that `pattern_key` has a `validation_case` (issue #501 — **required**: a pattern with no `validation_case` may not become a skill; leave it as a note, or write a learning suggesting one be authored), AND no existing eligible skill covers it (≥3 keyword overlap → refine that one instead), draft a new skill. **Applied gate (bootstrap):** also require `applied ≥ 1` for that `pattern_key` (it was acted on, not just recurred); while `applied_pattern_keys` is still sparse (the first ~10 sessions after this field ships), recurrence ≥3 alone may stand in — once the signal is populated, tighten to require both. (Only the `applied` gate has a bootstrap; the `validation_case` requirement above is never relaxed.)
 4. **NO-OP**: nothing meets the bars. Write a `NO-OP` event with a one-line note about what evidence you considered.
 
-If you've written 3 consecutive `NO-OP` events, also write `evolution_saturation: true` to the event — the harness reads this and extends the cooldown.
+If you've written 3 consecutive `NO-OP` events, also write `evolution_saturation: true` to the event. While the newest event carries it, `scripts/skill_evolve.sh` triples the cooldown (72h by default) before the next scheduled cycle.
 
 ### 5. Execute the action
 
@@ -351,6 +351,16 @@ The `[CANDIDATE — unreviewed]` prefix is critical — it tells the agent in fu
 ```bash
 git mv skills/<name>/ skills_attic/<name>/
 ```
+
+Then clean up the pointers the retired skill leaves behind, in the same event. Other skills that say "use `<name>`" would otherwise send the agent to a skill no loop loads, and nothing else repairs them: a pointer is not a complaint, so Refine never fires on it, and a sibling that is unmeasured is never retired (evt-0041, evt-0042).
+
+```bash
+grep -nE "\`<name>\`|skills/<name>([^a-z0-9-]|$)" skills/*/SKILL.md
+```
+
+- In an **eligible** sibling (HARD RULE #1), edit only the lines that point at `<name>`: point them at what replaces it if something does (a builtin tool, another skill), otherwise delete the line. Change nothing else in that file; it is cleanup, not a refine, so it does not touch the sibling's `last_evolved` or bookkeeping fields.
+- In a **non-eligible** skill (`core: true` or not `origin: yoyo`), or anywhere outside `skills/`, do not edit. List each hit as `path:line` under `stale-pointers:` in the event, for the creator.
+- Record what you changed under `pointers-fixed:` (or `pointers-fixed: none`).
 
 Soft delete. Recoverable. If yoyo invokes the skill's domain again within 3 cycles, you may revive it (move back, reset score to 0.5).
 
@@ -478,7 +488,7 @@ Before any `create` action, verify all of these:
 | Mode | What it looks like | What you do |
 |---|---|---|
 | **Skill thrashing** | Same skill refined twice within 3 sessions | Read `last_evolved` before refining; if < 3 sessions ago, pick a different target or NO-OP |
-| **Saturation** | 3 consecutive NO-OP events in `_journal.md` | Add `evolution_saturation: true` to the third event; harness will extend cooldown |
+| **Saturation** | 3 consecutive NO-OP events in `_journal.md` | Add `evolution_saturation: true` to the third event; the harness triples the cooldown while it is the newest event |
 | **Self-edit attempt** | Pattern points at `skill-evolve` itself | HARD RULE #2 — write `meta-suggestion` and stop |
 | **Core-edit attempt** | Pattern points at one of the core 4 | HARD RULE #1 — write `facts.jsonl` entry and stop |
 | **Skill collision** | New skill's triggers overlap an existing skill | Refine the existing skill instead |

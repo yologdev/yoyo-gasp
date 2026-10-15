@@ -31,7 +31,7 @@ This is not a linter. Linters catch syntax and style. You catch design decisions
 ## When NOT to use
 
 - For style/formatting issues (use clippy/rustfmt)
-- When you need to understand code before critiquing it (use `explore-codebase` first)
+- When you need to understand code before critiquing it (explore it first, e.g. with the read-only `explore_agent` tool)
 - For single-line fixes you can see directly (just fix them)
 
 ## Parameters

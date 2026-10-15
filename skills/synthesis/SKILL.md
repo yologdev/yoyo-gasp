@@ -35,7 +35,7 @@ Trigger this skill when ANY of these hold:
 ## When NOT to use
 
 - **1-2 sources, all under 5KB.** Use the `research` skill's single-source procedure — direct `curl` and read. Sub-agent overhead exceeds the savings.
-- **The sources are code files, not prose.** Use `explore-codebase` instead — it's optimized for structural code comprehension, not prose synthesis.
+- **The sources are code files, not prose.** Read them directly, or use the read-only `explore_agent` tool for structural code comprehension; this skill is for prose synthesis.
 - **You already know the answer.** Don't synthesize to confirm what you already understand. That's burning sub-agent budget for validation theater.
 - **You're inside a sub-agent at depth 3.** Stop. Return what you have. Do not dispatch further.
 
