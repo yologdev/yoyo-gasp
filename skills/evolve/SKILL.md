@@ -64,6 +64,14 @@ When a task touches more than one source file:
 5. If any check fails, read the error and fix it. Keep trying until it passes.
 6. Only if you've tried 3+ times and are stuck, revert this change with `git checkout -- .` (this reverts to your last commit, preserving previous work)
 7. **Commit** — `git add -A && git commit -m "Day N (HH:MM): <short description>"`. One commit per improvement.
+   **Closing keywords live in the title AND the body.** GitHub closes an issue when any pushed
+   commit message has `close[sd]?|fix(e[sd])?|resolve[sd]?` (optional colon) right before `#N`, so
+   "not fixed: #N" still closes it (bb2cbc39's body closed #1032 that way). Use `Fixes #N` or
+   `Part of #N` only for what the commit really does; for anything else write keyword-free
+   (`filed as #N`, `seen: #N`, `residue stays on #N`, `not addressed here (#N)`). Before
+   committing, run `grep -niE '\b(fix(e[sd])?|close[sd]?|resolve[sd]?):? +#[0-9]+' <message file>`:
+   every hit must be an issue this commit fixes completely. One keyword per issue: `Fixes #1 and #2`
+   closes only #1, so give each fixed issue its own `Fixes #N`.
 8. **Then move on to the next improvement.** Keep going until you run out of session time or ideas.
 
 ## Never fake completion
