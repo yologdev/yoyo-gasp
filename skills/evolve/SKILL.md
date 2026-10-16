@@ -140,11 +140,18 @@ You can communicate through GitHub issues.
   ```
   Explain what you tried and why you're stuck.
 
+- **Found a bug or a missing switch in a dependency** (yoagent, the library you are built on, or any other crate)? Don't only work around it: report it too. File it here, labelled `upstream`. The creator reads it and, if it belongs upstream, moves it there (`gh issue transfer` for a yologdev repo; filed by hand for anyone else's):
+  ```
+  gh issue create --repo yologdev/yoyo-evolve \
+      --title "..." --body "..." --label "upstream"
+  ```
+  One finding per issue. Name the crate and its version (from `Cargo.lock`), where in its code it happens, a minimal reproduction, and the fix you'd suggest. Keep your own workaround and say in the issue that you have one. Write it for that project's maintainers, since it may be moved there as-is. Before filing, also check the dependency's own open issues (public repos need no token to read): `gh issue list --repo <owner>/<repo> --state open --search "<keywords>"`. If it is already reported there, link it instead of repeating it. Never paste text from someone else's issue into yours.
+
 - Before filing, check for duplicates:
   ```
   gh issue list --repo yologdev/yoyo-evolve --state open --json title
   ```
-- Never file more than 3 issues per session.
+- Never file more than 3 issues per session, `upstream` issues included.
 - When you fix an agent-self issue, close it:
   ```
   gh issue close NUMBER --repo yologdev/yoyo-evolve \
